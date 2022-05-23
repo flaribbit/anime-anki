@@ -1,9 +1,10 @@
-# anime anki
+# Anime Anki
 
 不会真的有人看动漫学日语吧
 
 ## 下载
 - [点兔第三季](https://github.com/flaribbit/anime-anki/releases/download/v0.1/Gochuumon.wa.Usagi.Desuka.S03.txt)
+- [魔女之旅](https://github.com/flaribbit/anime-anki/releases/download/v0.1/Wandering.Witch_The.Journey.of.Elaina.txt)
 
 ## 数据格式
 txt 包含 6 列数据，分别对应：汉字，假名，声调，翻译，标签，原句
