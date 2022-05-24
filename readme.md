@@ -26,6 +26,8 @@ txt 包含 6 列数据，分别对应：汉字，假名，声调，翻译，标�
 ![demo](image/anki.png)
 
 ## 感谢
+- [kitsunekko](https://www.kitsunekko.net/)
+- [itazuraneko](https://itazuraneko.neocities.org/library/sub.html)
 - [喵萌奶茶屋](https://github.com/Nekomoekissaten-SUB/)
 - 桜都字幕组
 - 和其他所有公益字幕组
