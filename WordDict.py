@@ -13,16 +13,16 @@ class WordDict:
         self.load('dict/N3.txt', 'N3')
         self.load('dict/N2.txt', 'N2')
         self.load('dict/N1.txt', 'N1')
-        self.load('dict/EX.txt', 'EX')
+        self.load_exdict()
 
     def find(self, text: str) -> List[str]:
         if text in self.data:
             return self.data[text]
-        res = self.online_hj(text)
+        res = self.online_youdao(text)
         if res:
             self.exdata.append(res)
             self.add_word(res, 'EX')
-            return res
+            return self.data[text]
         return []
 
     def load(self, filename: str, tag: str):
@@ -31,6 +31,14 @@ class WordDict:
             for line in f:
                 row = line.rstrip().split('\t')
                 self.add_word(row, tag)
+
+    def load_exdict(self):
+        print('loading ex dict')
+        with open('dict/EX.txt', 'r', encoding='utf-8') as f:
+            for line in f:
+                row = line.rstrip().split('\t')
+                self.exdata.append(row)
+                self.add_word(row, 'EX')
 
     def add_word(self, row: List[str], tag: str):
         if row[0] not in self.data:
@@ -70,6 +78,27 @@ class WordDict:
                 get_string(header, '.pronounces span', 0)[1:-1],  # 假名
                 get_string(header, '.pronounces span', 2),  # 声调
                 ' '.join(get_string(header, '.simple h2,li'))  # 释义
+            ]
+        except Exception as e:
+            print(e)
+            return []
+
+    def online_youdao(self, text: str):
+        from lxml import etree
+        import requests
+        print('youdao:', text)
+        WordDict._count += 1
+        if WordDict._count % 10 == 0:
+            self.save_exdict()
+        try:
+            res = requests.get('https://youdao.com/result?lang=ja&word='+text)
+            doc = etree.HTML(res.text)
+            pronounce = doc.xpath('//div[@class="head-content"]//text()')
+            return [
+                text,  # 单词
+                pronounce[0],  # 假名
+                pronounce[1],  # 声调
+                ' '.join(e.xpath('string()') for e in doc.xpath('//div[@class="each-sense"]')),
             ]
         except Exception as e:
             print(e)
