@@ -51,10 +51,12 @@ def make_cards(short_name: str, srt_path: str):
                     cards[word][4] += f' {short_name}E{ep:02}'
                 else:
                     cards[word] = [word, '-', '-', '-', '-', line]
+        wordDict.save_exdict()
     with open(f'anki/{short_name}.txt', 'w', encoding='utf-8') as f:
         for word, v in cards.items():
             f.write('\t'.join(v)+'\n')
 
 
-# make_cards('点兔S03', 'subtitle/Gochuumon wa Usagi Desuka_ Bloom (01-12, JP only)/Gochuumon wa Usagi Desuka.S03E{:02}.ja.srt')
+make_cards(
+    '点兔S03', 'subtitle/Gochuumon wa Usagi Desuka_ Bloom (01-12, JP only)/Gochuumon wa Usagi Desuka.S03E{:02}.ja.srt')
 # make_cards('魔女之旅', 'subtitle/Wandering Witch_The Journey of Elaina/S01E{:02}.ja.srt')
